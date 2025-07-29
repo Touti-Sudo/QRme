@@ -52,7 +52,6 @@ Download the App here:
 ### Prerequisites
 
 * Flutter SDK (>= 3.0.0)
-* Firebase project
 * Android/iOS setup
 
 ### Installation
