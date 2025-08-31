@@ -43,7 +43,7 @@ Download the App here:
 ### Scan Page
 <img src="assets/screenshots/Home.png" alt="Home Screenshot" width="300"/>
 
-### Creat Page
+### Create Page
 <img src="assets/screenshots/Create.png" alt="Search Screenshot" width="300"/>
 ---
 
@@ -111,3 +111,4 @@ This project is licensed under the GPL License. See the [LICENSE](LICENSE) file 
 ---
 
 Enjoy Scanning with QRme!
+
