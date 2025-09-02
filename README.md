@@ -56,12 +56,12 @@ Download the App here:
 ---
 ## 📸 Qrcodes made with my App
 
-
+<p align="center">
   <img src="assets/screenshots/Facebook.png" width="300"/>
   <img src="assets/screenshots/Youtube.png" width="300"/>
   <img src="assets/screenshots/Google.png" width="300"/>
-  <img src="assets/screenshots/github.png" width="300"/>
-  
+  <img src="assets/screenshots/Github.png" width="300"/>
+</p>
 ---
 
 ## 🚀 Getting Started
@@ -129,6 +129,7 @@ This project is licensed under the GPL License. See the [LICENSE](LICENSE) file 
 ---
 
 Enjoy Scanning with QRme!
+
 
 
 
