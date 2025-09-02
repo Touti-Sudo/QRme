@@ -26,25 +26,42 @@ Download the App here:
 * No Internet Required
 
 ---
+# 🆕 Updates
 
+### v1.1 – Customization Update 🎨
+
+* Added ability to **customize QR codes** (colors, styles, shapes)
+* Improved UI animations for a smoother experience
+* Bug fixes & performance improvements
+---
 ## 🧱 Built With
 
 * [Flutter](https://flutter.dev/)
-* `path_provider` for state management
 * `mobile_scanner` for scanning qr codes
 * `pretty_qr_code` for creating qr codes
 * `url_launcher` to launch the urls
 * `screenshot` 
-* `share_plus` to share bettween friends
+* `share_plus` to share between friends
 
 ---
 
 ## 📸 Screenshots
-### Scan Page
-<img src="assets/screenshots/Home.png" alt="Home Screenshot" width="300"/>
 
-### Create Page
-<img src="assets/screenshots/Create.png" alt="Search Screenshot" width="300"/>
+<p align="center">
+  <img src="assets/screenshots/Home.png" width="300"/>
+  <img src="assets/screenshots/Create.png" width="300"/>
+  <img src="assets/screenshots/Create2.png" width="300"/>
+</p>
+
+---
+## 📸 Qrcodes made with my App
+
+
+  <img src="assets/screenshots/Facebook.png" width="300"/>
+  <img src="assets/screenshots/Youtube.png" width="300"/>
+  <img src="assets/screenshots/Google.png" width="300"/>
+  <img src="assets/screenshots/github.png" width="300"/>
+  
 ---
 
 ## 🚀 Getting Started
@@ -52,6 +69,7 @@ Download the App here:
 ### Prerequisites
 
 * Flutter SDK (>= 3.0.0)
+* Firebase project
 * Android/iOS setup
 
 ### Installation
@@ -111,4 +129,3 @@ This project is licensed under the GPL License. See the [LICENSE](LICENSE) file 
 ---
 
 Enjoy Scanning with QRme!
-
