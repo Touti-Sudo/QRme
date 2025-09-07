@@ -8,7 +8,7 @@ do not forget to star ⭐🌟⭐
 
 Download the App here:
 
-[![Download](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/Touti-Sudo/QRme/releases/download/V1.0.0/app-release.apk)
+[![Download](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/Touti-Sudo/QRme/releases/download/V1.2.0/app-release.apk)
 
 ![Downloads](https://img.shields.io/github/downloads/Touti-Sudo/Qrme/total)
 
@@ -136,4 +136,5 @@ This project is licensed under the GPL License. See the [LICENSE](LICENSE) file 
 ---
 
 Enjoy Scanning with QRme!
+
 
