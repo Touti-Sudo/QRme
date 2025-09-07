@@ -8,7 +8,7 @@ do not forget to star ⭐🌟⭐
 
 Download the App here:
 
-[![Download](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/Touti-Sudo/QRme/releases/download/v1.1.0/app-release.apk)
+[![Download](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/Touti-Sudo/QRme/releases/download/V1.0.0/app-release.apk)
 
 ![Downloads](https://img.shields.io/github/downloads/Touti-Sudo/Qrme/total)
 
@@ -28,11 +28,16 @@ Download the App here:
 ---
 # 🆕 Updates
 
-### v1.1 – Customization Update 🎨
 
-* Added ability to **customize QR codes** (colors, styles, shapes)
-* Improved UI animations for a smoother experience
-* Bug fixes & performance improvements
+### v1.2.0
+- Added **bottom navigation bar** for easier navigation
+- New **Settings page** with:
+  - Dark/Light theme toggle
+  - Scan options (auto open URLs, auto save QR codes)
+- Added **QR History page** to view previously generated codes
+- Improved **QR Scan UI** with better design and usability
+- Updated app colors and general UI design
+
 ---
 ## 🧱 Built With
 
@@ -49,19 +54,21 @@ Download the App here:
 
 <p align="center">
   <img src="assets/screenshots/Home.png" width="300"/>
-  <img src="assets/screenshots/CreatePage.png" width="300"/>
+  <img src="assets/screenshots/Create.png" width="300"/>
   <img src="assets/screenshots/Create2.png" width="300"/>
+  <img src="assets/screenshots/settings.png" width="300"/>
+  <img src="assets/screenshots/history.png" width="300"/>
 </p>
 
 ---
 ## 📸 Qrcodes made with my App
 
-<p align="center">
+
   <img src="assets/screenshots/Facebook.png" width="300"/>
   <img src="assets/screenshots/Youtube.png" width="300"/>
   <img src="assets/screenshots/Google.png" width="300"/>
-  <img src="assets/screenshots/Github.png" width="300"/>
-</p>
+  <img src="assets/screenshots/github.png" width="300"/>
+
 ---
 
 ## 🚀 Getting Started
@@ -129,8 +136,3 @@ This project is licensed under the GPL License. See the [LICENSE](LICENSE) file 
 ---
 
 Enjoy Scanning with QRme!
-
-
-
-
-

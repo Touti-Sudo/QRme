@@ -1,8 +1,12 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:qrme/models/qr_code_model.dart';
+import 'package:qrme/settings/SettingsProvider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,12 +19,13 @@ class QrRenderPage extends StatefulWidget {
 }
 
 class _QrRenderPageState extends State<QrRenderPage> {
-    void Function()? open_link(code)  {
-  final uri = Uri.tryParse(code);
-  if (uri != null && uri.hasAbsolutePath) {
-    launchUrl(uri, mode: LaunchMode.externalApplication);
+  void Function()? open_link(code) {
+    final uri = Uri.tryParse(code);
+    if (uri != null && uri.hasAbsolutePath) {
+      launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
-}
+
   File? _image;
   Future<void> pickFromFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -31,7 +36,8 @@ class _QrRenderPageState extends State<QrRenderPage> {
       });
     }
   }
-  TextEditingController textController=TextEditingController();
+
+  TextEditingController textController = TextEditingController();
   double sizeLogo = 50;
 
   final List<Color> colors = [
@@ -58,10 +64,31 @@ class _QrRenderPageState extends State<QrRenderPage> {
 
   ScreenshotController screenshotController = ScreenshotController();
   String? qrdata;
+  Future<void> _autoSaveQr(String data) async {
+    final image = await screenshotController.capture();
+    if (image == null) return;
+
+    final directory = await getApplicationDocumentsDirectory();
+    final imagePath =
+        '${directory.path}/qr_${DateTime.now().millisecondsSinceEpoch}.png';
+    final file = File(imagePath);
+    await file.writeAsBytes(image);
+
+    final box = Hive.box<QrCodeModel>('qrcodes');
+    await box.add(QrCodeModel(
+      data: data,
+      imagePath: imagePath,
+      dateCreated: DateTime.now(),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
+       final settings = Provider.of<SettingsProvider>(context);
     return Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: Text("Create QR Code"),
         actions: [
           GestureDetector(
@@ -70,7 +97,7 @@ class _QrRenderPageState extends State<QrRenderPage> {
               child: Icon(Icons.qr_code_scanner_sharp),
             ),
             onTap: () {
-              Navigator.pushReplacementNamed(context, "/scanpage");
+              Navigator.pushReplacementNamed(context, "/homepage");
             },
           ),
         ],
@@ -83,15 +110,25 @@ class _QrRenderPageState extends State<QrRenderPage> {
               child: TextField(
                 controller: textController,
                 decoration: InputDecoration(
-                  hintText: 'Enter your URL',
+                  hintText: 'Enter your URL or text or wifi password ...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onSubmitted: (value) {
+                onSubmitted: (value) async {
                   setState(() {
                     qrdata = value;
                   });
+
+
+                  if (settings.autoSaveQRCodes && qrdata != null) {
+                    await _autoSaveQr(qrdata!);
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("QR code saved automatically"),backgroundColor: Theme.of(context).colorScheme.primary,),
+                      );
+                    }
+                  }
                 },
               ),
             ),
@@ -100,33 +137,68 @@ class _QrRenderPageState extends State<QrRenderPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(40),
-                    child: Screenshot(
-                      controller: screenshotController,
-                      child: Center(
-                        child: GestureDetector(
-                          onTap: () => open_link(textController.text),
-                          child: QrImageView(
-                            data: qrdata!,
-                            size: size,
-                            eyeStyle: QrEyeStyle(
-                              eyeShape: eyeShape,
-                              color: eyeColor,
-                            ),
-                            gapless: false,
-                              errorCorrectionLevel: QrErrorCorrectLevel.H,
-                            embeddedImage: _image != null
-                                ? FileImage(_image!)
-                                : null,
-                          
-                            embeddedImageStyle: QrEmbeddedImageStyle(
-                              size: Size(sizeLogo,sizeLogo),
-                            ),
-                            dataModuleStyle: QrDataModuleStyle(
-                              dataModuleShape: moduleShape,
-                              color: moduleColor,
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () async {
+                                  final image = await screenshotController
+                                      .capture();
+                                  if (image != null && qrdata != null) {
+                                    final directory =
+                                        await getApplicationDocumentsDirectory();
+                                    final imagePath =
+                                        '${directory.path}/qr_${DateTime.now().millisecondsSinceEpoch}.png';
+                                    final file = File(imagePath);
+                                    await file.writeAsBytes(image);
+
+                                    final box = Hive.box<QrCodeModel>(
+                                      'qrcodes',
+                                    );
+                                    await box.add(
+                                      QrCodeModel(
+                                        data: qrdata!,
+                                        imagePath: imagePath,
+                                        dateCreated: DateTime.now(),
+                                      ),
+                                    );
+                                  }
+                                },
+                                icon: Icon(Icons.save),
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () => open_link(textController.text),
+                            child: Screenshot(
+                              controller: screenshotController,
+                              child: QrImageView(
+                                data: qrdata!,
+                                size: size,
+                                eyeStyle: QrEyeStyle(
+                                  eyeShape: eyeShape,
+                                  color: eyeColor,
+                                ),
+                                gapless: false,
+                                errorCorrectionLevel: QrErrorCorrectLevel.H,
+                                embeddedImage: _image != null
+                                    ? FileImage(_image!)
+                                    : null,
+
+                                embeddedImageStyle: QrEmbeddedImageStyle(
+                                  size: Size(sizeLogo, sizeLogo),
+                                ),
+                                dataModuleStyle: QrDataModuleStyle(
+                                  dataModuleShape: moduleShape,
+                                  color: moduleColor,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),
@@ -178,6 +250,7 @@ class _QrRenderPageState extends State<QrRenderPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Slider.adaptive(
+                        activeColor: Colors.amber,
                         value: sizeLogo,
                         min: 10,
                         max: 50,
@@ -217,7 +290,7 @@ class _QrRenderPageState extends State<QrRenderPage> {
                       min: 50,
                       max: 340,
                       label: size.round().toString(),
-                      activeColor: Colors.lightBlueAccent,
+                      activeColor: Colors.red,
                       inactiveColor: Colors.black,
                       onChanged: (double value) {
                         setState(() {
