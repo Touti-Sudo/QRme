@@ -67,7 +67,7 @@ Download the App here:
   <img src="assets/screenshots/Facebook.png" width="300"/>
   <img src="assets/screenshots/Youtube.png" width="300"/>
   <img src="assets/screenshots/Google.png" width="300"/>
-  <img src="assets/screenshots/github.png" width="300"/>
+  <img src="assets/screenshots/Github.png" width="300"/>
 
 ---
 
@@ -136,3 +136,4 @@ This project is licensed under the GPL License. See the [LICENSE](LICENSE) file 
 ---
 
 Enjoy Scanning with QRme!
+
